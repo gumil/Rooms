@@ -53,8 +53,7 @@ class RoomsListViewModelTest {
 
         viewModel.loadRooms()
 
-        assert(state.value.exception is RuntimeException)
-        assert(state.value.exception?.cause is IOException)
+        assert(state.value.exception is RoomsException.LoadingException)
     }
 
     @Test
@@ -91,7 +90,6 @@ class RoomsListViewModelTest {
 
         viewModel.bookRoom(room)
 
-        assert(state.value.exception is RuntimeException)
-        assert(state.value.exception?.cause is IOException)
+        assert(state.value.exception is RoomsException.BookingException)
     }
 }

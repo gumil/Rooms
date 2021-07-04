@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import dev.gumil.rooms.di.AppContainer
@@ -26,14 +27,19 @@ class MainActivity : ComponentActivity() {
     @Composable
     private fun RoomsApp(appContainer: AppContainer) {
         RoomsTheme {
+            val scaffoldState = rememberScaffoldState()
             Scaffold(
+                scaffoldState = scaffoldState,
                 topBar = {
                     TopAppBar(title = {
                         Text(text = stringResource(id = R.string.app_name))
                     })
                 },
                 content = {
-                    RoomsListScreen(appContainer = appContainer)
+                    RoomsListScreen(
+                        appContainer = appContainer,
+                        scaffoldState = scaffoldState
+                    )
                 }
             )
         }

@@ -29,7 +29,7 @@ class RoomsListViewModel(
                     repository.getRooms()
                 }
             }.onFailure { throwable ->
-                state.value = state.value.copy(exception = RuntimeException(throwable))
+                state.value = state.value.copy(loading = false, exception = RoomsException.LoadingException())
             }.onSuccess { rooms ->
                 state.value = UiState(data = rooms)
             }
@@ -43,7 +43,7 @@ class RoomsListViewModel(
                     repository.bookRoom(room)
                 }
             }.onFailure { throwable ->
-                state.value = state.value.copy(exception = RuntimeException(throwable))
+                state.value = state.value.copy(loading = false, exception = RoomsException.BookingException())
             }.onSuccess { rooms ->
                 state.value = UiState(data = rooms)
             }
@@ -60,7 +60,7 @@ sealed class Event {
 
 data class UiState<T>(
     val loading: Boolean = false,
-    val exception: Exception? = null,
+    val exception: RoomsException? = null,
     val data: T? = null
 )
 
@@ -95,4 +95,9 @@ fun produceUiState(
     return ProducerResult(result) { event ->
         channel.trySend(event)
     }
+}
+
+sealed class RoomsException : IllegalStateException() {
+    class LoadingException : RoomsException()
+    class BookingException : RoomsException()
 }

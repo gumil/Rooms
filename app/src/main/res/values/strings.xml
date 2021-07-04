@@ -5,4 +5,6 @@
     <string name="book">Book!</string>
     <string name="booked">Booked!</string>
     <string name="fully_booked">Fully Booked!</string>
+    <string name="error">Something went wrong. Please try again!</string>
+    <string name="refresh">Refresh</string>
 </resources>
