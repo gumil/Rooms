@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Rooms</string>
+    <string name="x_spots_remaining">%1$s spots remaining</string>
+    <string name="book">Book!</string>
 </resources>
