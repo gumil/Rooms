@@ -28,7 +28,10 @@ import dev.gumil.rooms.data.Room
 import dev.gumil.rooms.ui.theme.RoomsTheme
 
 @Composable
-fun RoomsListItem(room: Room) {
+fun RoomsListItem(
+    room: Room,
+    onBookRoom: (Room) -> Unit
+) {
     Card(
         modifier = Modifier.padding(
             horizontal = 8.dp,
@@ -58,12 +61,19 @@ fun RoomsListItem(room: Room) {
                     .fillMaxWidth()
             ) {
                 ItemTextInformation(room)
+
+                val buttonText = if (room.isBooked) {
+                    stringResource(id = R.string.booked)
+                } else {
+                    stringResource(id = R.string.book)
+                }
+
                 Button(
-                    onClick = { /*TODO*/ },
+                    onClick = { onBookRoom(room) },
                     modifier = Modifier.align(Alignment.CenterVertically),
-                    enabled = room.spots > 0
+                    enabled = room.spots > 0 && !room.isBooked
                 ) {
-                    Text(text = stringResource(id = R.string.book))
+                    Text(text = buttonText)
                 }
             }
         }
@@ -108,7 +118,7 @@ fun PreviewRoomsListItem() {
                 spots = 43,
                 thumbnail = ""
             )
-        )
+        ) {}
     }
 }
 
@@ -122,6 +132,21 @@ fun PreviewRoomsListItemWith0Spots() {
                 spots = 0,
                 thumbnail = ""
             )
-        )
+        ) {}
+    }
+}
+
+@Preview
+@Composable
+fun PreviewRoomsListItemBooked() {
+    RoomsTheme {
+        RoomsListItem(
+            room = Room(
+                name = "Ljerka",
+                spots = 43,
+                thumbnail = "",
+                isBooked = true
+            )
+        ) {}
     }
 }

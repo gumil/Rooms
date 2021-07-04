@@ -20,7 +20,9 @@ data class Room(
     @Json(name = "spots")
     val spots: Int,
     @Json(name = "thumbnail")
-    val thumbnail: String
+    val thumbnail: String,
+
+    val isBooked: Boolean = false
 )
 
 @JsonClass(generateAdapter = true)

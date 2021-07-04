@@ -28,13 +28,26 @@ class RoomsDaoTest {
     }
 
     @Test
-    fun insertRoomAndAddDuplicateRooms() {
+    fun insertRoomListAndReplaceDuplicateRooms() {
         val room = room()
         val expected = listOf(room)
 
         roomsDao.insert(listOf(room))
         roomsDao.insert(listOf(room))
         roomsDao.insert(listOf(room))
+        val actual = roomsDao.getAllRooms()
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun updateRoom() {
+        val room = room()
+        val bookedRoom = room.copy(isBooked = true)
+        val expected = listOf(bookedRoom)
+
+        roomsDao.insert(listOf(room))
+        roomsDao.update(bookedRoom)
         val actual = roomsDao.getAllRooms()
 
         assertEquals(expected, actual)

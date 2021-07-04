@@ -9,16 +9,25 @@ import timber.log.Timber
 class NetworkLocalRoomsRepository(
     private val roomsApi: RoomsApi,
     private val roomsDao: RoomsDao
-): RoomsRepository {
+) : RoomsRepository {
 
     override suspend fun getRooms(): List<Room> {
         return try {
+            val localRooms = roomsDao.getAllRooms()
+
+            if (localRooms.isNotEmpty()) return localRooms
+
             val rooms = roomsApi.getRooms().rooms
             roomsDao.insert(rooms)
             rooms
         } catch (e: IOException) {
             Timber.w(e)
-            roomsDao.getAllRooms()
+            emptyList()
         }
+    }
+
+    override suspend fun bookRoom(room: Room): List<Room> {
+        roomsDao.update(room.copy(spots = room.spots - 1, isBooked = true))
+        return roomsDao.getAllRooms()
     }
 }

@@ -3,5 +3,6 @@
     <string name="one_spots_remaining">1 spot remaining</string>
     <string name="x_spots_remaining">%1$s spots remaining</string>
     <string name="book">Book!</string>
+    <string name="booked">Booked!</string>
     <string name="fully_booked">Fully Booked!</string>
 </resources>

@@ -29,7 +29,21 @@ class RoomsListViewModel(
                     repository.getRooms()
                 }
             }.onFailure { throwable ->
-                state.value = UiState(exception = RuntimeException(throwable))
+                state.value = state.value.copy(exception = RuntimeException(throwable))
+            }.onSuccess { rooms ->
+                state.value = UiState(data = rooms)
+            }
+        }
+    }
+
+    fun bookRoom(room: Room) {
+        scope.launch {
+            runCatching {
+                withContext(dispatcherProvider.io) {
+                    repository.bookRoom(room)
+                }
+            }.onFailure { throwable ->
+                state.value = state.value.copy(exception = RuntimeException(throwable))
             }.onSuccess { rooms ->
                 state.value = UiState(data = rooms)
             }
@@ -39,6 +53,9 @@ class RoomsListViewModel(
 
 sealed class Event {
     object Refresh: Event()
+    data class Book(
+        val room: Room
+    ): Event()
 }
 
 data class UiState<T>(
@@ -71,6 +88,7 @@ fun produceUiState(
         for (event in channel) {
             when (event) {
                 Event.Refresh -> viewModel.loadRooms()
+                is Event.Book -> viewModel.bookRoom(event.room)
             }
         }
     }

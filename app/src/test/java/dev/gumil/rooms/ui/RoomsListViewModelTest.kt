@@ -56,4 +56,42 @@ class RoomsListViewModelTest {
         assert(state.value.exception is RuntimeException)
         assert(state.value.exception?.cause is IOException)
     }
+
+    @Test
+    fun `book room success updates data`() = runBlockingTest {
+        val viewModel = viewModelFactory(this)
+        val room = Room(
+            name = "${Random.nextInt()}",
+            spots = Random.nextInt(),
+            thumbnail = "${Random.nextInt()}"
+        )
+
+        val list = listOf(room.copy(isBooked = true))
+
+        whenever(roomsRepository.bookRoom(room)).thenReturn(list)
+
+        val expected = UiState(data = list)
+
+        viewModel.bookRoom(room)
+
+        assertEquals(expected, state.value)
+    }
+
+    @Test
+    fun `book room fails updates state exception`() = runBlockingTest {
+        val viewModel = viewModelFactory(this)
+        val room = Room(
+            name = "${Random.nextInt()}",
+            spots = Random.nextInt(),
+            thumbnail = "${Random.nextInt()}"
+        )
+
+        val exception = IOException()
+        whenever(roomsRepository.bookRoom(room)).then { throw exception }
+
+        viewModel.bookRoom(room)
+
+        assert(state.value.exception is RuntimeException)
+        assert(state.value.exception?.cause is IOException)
+    }
 }

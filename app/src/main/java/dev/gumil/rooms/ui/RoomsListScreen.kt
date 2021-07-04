@@ -27,17 +27,25 @@ private fun RoomsListScreen(
         onRefresh = { onEvent(Event.Refresh) }
     ) {
         state.data?.let { rooms ->
-            RoomsListScreen(rooms = rooms)
+            RoomsListScreen(rooms = rooms) { room ->
+                onEvent(Event.Book(room))
+            }
         }
     }
 }
 
 @Composable
-fun RoomsListScreen(rooms: List<Room>) {
+fun RoomsListScreen(
+    rooms: List<Room>,
+    onBookRoom: (Room) -> Unit
+) {
     LazyColumn {
         item {
             rooms.forEach { room ->
-                RoomsListItem(room = room)
+                RoomsListItem(
+                    room = room,
+                    onBookRoom = onBookRoom
+                )
             }
         }
     }
@@ -54,6 +62,6 @@ fun PreviewRoomsListScreen() {
         )
     }
     RoomsTheme {
-        RoomsListScreen(rooms = rooms)
+        RoomsListScreen(rooms = rooms) {}
     }
 }
