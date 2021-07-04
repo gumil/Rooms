@@ -6,5 +6,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#9F0086</color>
+    <color name="colorPrimaryDark">#d18ac1</color>
     <color name="colorPrimaryVariant">#82007c</color>
 </resources>
