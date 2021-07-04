@@ -1,5 +1,7 @@
 package dev.gumil.rooms.data
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -9,8 +11,10 @@ data class RoomsList(
     val rooms: List<Room>
 )
 
+@Entity
 @JsonClass(generateAdapter = true)
 data class Room(
+    @PrimaryKey
     @Json(name = "name")
     val name: String,
     @Json(name = "spots")
