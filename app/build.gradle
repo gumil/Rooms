@@ -80,6 +80,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$room"
     kapt "androidx.room:room-compiler:$room"
 
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines"
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp"
