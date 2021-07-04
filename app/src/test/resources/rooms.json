@@ -1,0 +1,14 @@
+{
+  "rooms": [
+    {
+      "name": "Ljerka",
+      "spots": 43,
+      "thumbnail": "ljerka"
+    },
+    {
+      "name": "Mostafa",
+      "spots": 4,
+      "thumbnail": "mostafa"
+    }
+  ]
+}
