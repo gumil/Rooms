@@ -60,7 +60,8 @@ fun RoomsListItem(room: Room) {
                 ItemTextInformation(room)
                 Button(
                     onClick = { /*TODO*/ },
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    enabled = room.spots > 0
                 ) {
                     Text(text = stringResource(id = R.string.book))
                 }
@@ -81,8 +82,14 @@ private fun ItemTextInformation(room: Room) {
                 .paddingFromBaseline(44.sp)
         )
 
+        val info = when (room.spots) {
+            0 -> stringResource(id = R.string.fully_booked)
+            1 -> stringResource(id = R.string.one_spots_remaining)
+            else -> stringResource(id = R.string.x_spots_remaining, room.spots)
+        }
+
         Text(
-            text = stringResource(id = R.string.x_spots_remaining, room.spots),
+            text = info,
             style = MaterialTheme.typography.body1
                 .copy(color = MaterialTheme.colors.primary),
             modifier = Modifier
@@ -99,6 +106,20 @@ fun PreviewRoomsListItem() {
             room = Room(
                 name = "Ljerka",
                 spots = 43,
+                thumbnail = ""
+            )
+        )
+    }
+}
+
+@Preview
+@Composable
+fun PreviewRoomsListItemWith0Spots() {
+    RoomsTheme {
+        RoomsListItem(
+            room = Room(
+                name = "Ljerka",
+                spots = 0,
                 thumbnail = ""
             )
         )
