@@ -27,6 +27,7 @@ class NetworkLocalRoomsRepositoryTest {
 
         val actual = repository.getRooms()
 
+        verify(dao).insert(expected)
         verify(dao, never()).getAllRooms()
         assertEquals(expected, actual)
     }

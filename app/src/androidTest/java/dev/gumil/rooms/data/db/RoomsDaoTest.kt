@@ -21,7 +21,7 @@ class RoomsDaoTest {
         val room = room()
         val expected = listOf(room)
 
-        roomsDao.insert(room)
+        roomsDao.insert(listOf(room))
         val actual = roomsDao.getAllRooms()
 
         assertEquals(expected, actual)
@@ -32,9 +32,9 @@ class RoomsDaoTest {
         val room = room()
         val expected = listOf(room)
 
-        roomsDao.insert(room)
-        roomsDao.insert(room)
-        roomsDao.insert(room)
+        roomsDao.insert(listOf(room))
+        roomsDao.insert(listOf(room))
+        roomsDao.insert(listOf(room))
         val actual = roomsDao.getAllRooms()
 
         assertEquals(expected, actual)

@@ -13,7 +13,9 @@ class NetworkLocalRoomsRepository(
 
     override suspend fun getRooms(): List<Room> {
         return try {
-            roomsApi.getRooms().rooms
+            val rooms = roomsApi.getRooms().rooms
+            roomsDao.insert(rooms)
+            rooms
         } catch (e: IOException) {
             Timber.w(e)
             roomsDao.getAllRooms()

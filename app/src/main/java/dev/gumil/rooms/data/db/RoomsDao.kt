@@ -10,7 +10,7 @@ import dev.gumil.rooms.data.Room
 interface RoomsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg rooms: Room)
+    fun insert(rooms: List<Room>)
 
     @Query("SELECT * FROM room")
     fun getAllRooms(): List<Room>
