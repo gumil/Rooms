@@ -7,4 +7,5 @@
     <string name="fully_booked">Fully Booked!</string>
     <string name="error">Something went wrong. Please try again!</string>
     <string name="refresh">Refresh</string>
+    <string name="rooms_not_found">No rooms available!</string>
 </resources>

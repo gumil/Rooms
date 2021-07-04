@@ -1,13 +1,22 @@
 package dev.gumil.rooms.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.gumil.rooms.R
@@ -38,11 +47,34 @@ private fun RoomsListScreen(
         state = rememberSwipeRefreshState(isRefreshing = state.loading),
         onRefresh = { onEvent(Event.Refresh) }
     ) {
-        state.data?.let { rooms ->
-            RoomsListScreen(rooms = rooms) { room ->
-                onEvent(Event.Book(room))
+        val rooms = state.data
+
+        when {
+            rooms != null && rooms.isNotEmpty() -> {
+                RoomsListScreen(rooms = rooms) { room ->
+                    onEvent(Event.Book(room))
+                }
+            }
+            !state.loading -> {
+                EmptyScreen()
             }
         }
+    }
+}
+
+@Composable
+private fun EmptyScreen() {
+    Box(
+        modifier = Modifier
+            .padding(24.dp)
+            .fillMaxSize()
+    ) {
+        Text(
+            text = stringResource(id = R.string.rooms_not_found),
+            style = MaterialTheme.typography.h3,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 
@@ -102,5 +134,13 @@ fun PreviewRoomsListScreen() {
     }
     RoomsTheme {
         RoomsListScreen(rooms = rooms) {}
+    }
+}
+
+@Preview
+@Composable
+fun PreviewEmptyScreen() {
+    RoomsTheme {
+        EmptyScreen()
     }
 }
